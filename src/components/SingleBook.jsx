@@ -6,10 +6,6 @@ import CommentArea from './CommentArea'
 // ...sa solo che lo riceverà nelle props sotto forma di "book"
 
 class SingleBook extends Component {
-  state = {
-    selected: false,
-  }
-
   render() {
     return (
       <Col xs={12} md={6} lg={3}>
@@ -19,16 +15,22 @@ class SingleBook extends Component {
           // }
           //   className={`altraclasse ${this.state.selected ? 'selectedBook' : ''}`}
           style={{
-            border: this.state.selected ? '2px solid red' : '1px solid gray',
+            border:
+              this.props.asinLibroSelezionato === this.props.book.asin
+                ? '2px solid red'
+                : '1px solid gray',
           }}
         >
           <Card.Img
             variant="top"
             src={this.props.book.img}
             onClick={() => {
-              this.setState({
-                selected: !this.state.selected, // toggle
-              })
+              // this.setState({
+              //   selected: !this.state.selected, // toggle
+              // })
+              // devo anche utilizzare l'asin per cambiare lo stato di mio padre,
+              // BookList! invoco la funzione che mi arriva dalle props
+              this.props.cambiaAsin(this.props.book.asin) // invoca changeAsin in BookList
             }}
           />
           <Card.Body>
@@ -37,7 +39,7 @@ class SingleBook extends Component {
               {this.props.book.category} - {this.props.book.price}
             </Card.Text>
             <Button variant="primary">Go somewhere</Button>
-            {this.state.selected && <CommentArea asin={this.props.book.asin} />}
+            {/* {this.state.selected && <CommentArea asin={this.props.book.asin} />} */}
           </Card.Body>
         </Card>
       </Col>
