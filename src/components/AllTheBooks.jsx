@@ -1,6 +1,5 @@
-import { Card, Col, Container, Row, Button } from 'react-bootstrap'
-import scifi from '../data/scifi.json'
-// scifi è un array di libri!
+import { Card, Col, Container, Row, Button } from "react-bootstrap";
+import scifi from "../data/scifi.json";
 
 const AllTheBooks = function () {
   return (
@@ -20,11 +19,11 @@ const AllTheBooks = function () {
                 </Card.Body>
               </Card>
             </Col>
-          )
+          );
         })}
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default AllTheBooks
+export default AllTheBooks;

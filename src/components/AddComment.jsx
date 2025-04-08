@@ -1,87 +1,84 @@
-import { Component } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 
-const URL = 'https://striveschool-api.herokuapp.com/api/comments/'
+const URL = "https://striveschool-api.herokuapp.com/api/comments/";
 
-class AddComment extends Component {
-  state = {
-    review: {
-      comment: '',
-      rate: '3',
-      elementId: this.props.asin,
-    },
-  }
-
-  sendReview = (e) => {
-    e.preventDefault()
-    // facciamo la post, inviando come body this.state.review
+const AddComment = function (props) {
+  const [review, setReview] = useState({
+    comment: "",
+    rate: "3",
+    elementId: props.asin,
+  });
+  const sendReview = (e) => {
+    e.preventDefault();
     fetch(URL, {
-      method: 'POST',
-      body: JSON.stringify(this.state.review),
+      method: "POST",
+      body: JSON.stringify(review),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWJiYWIwMjViMjYxNTAwMTk4YTY5NmEiLCJpYXQiOjE3NDM2OTM5NzksImV4cCI6MTc0NDkwMzU3OX0.lwf-ZIFoaovBa04KJbdJgNOkivE8F7TkiASjtoOsHWs',
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Y1MTIyNTgxYjBkZDAwMTUwYTdhNjMiLCJpYXQiOjE3NDQxMTQyMTQsImV4cCI6MTc0NTMyMzgxNH0._dHTxhMkP_3ib5823j-5IAO3cWmCLA0FFQ5DJunW-xo",
       },
     })
       .then((response) => {
         if (response.ok) {
-          alert('COMMENTO INVIATO!')
+          alert("COMMENTO INVIATO!");
         } else {
-          throw new Error('commento NON inviato')
+          throw new Error("commento NON inviato");
         }
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
 
-  render() {
-    return (
-      <Form onSubmit={this.sendReview}>
-        <Form.Group className="mb-3">
-          <Form.Label>Testo</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Bello sto libbbro!"
-            value={this.state.review.comment}
-            required
-            onChange={(e) => {
-              this.setState({
-                review: {
-                  ...this.state.review,
-                  comment: e.target.value,
-                },
-              })
-            }}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Voto</Form.Label>
-          <Form.Select
-            value={this.state.review.rate}
-            onChange={(e) => {
-              this.setState({
-                review: {
-                  ...this.state.review,
-                  rate: e.target.value,
-                },
-              })
-            }}
-          >
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </Form.Select>
-        </Form.Group>
-        <Button variant="success" type="submit">
-          INVIA
-        </Button>
-      </Form>
-    )
-  }
-}
+  useEffect(() => {
+    setReview({
+      ...review,
+      elementId: props.asin,
+    });
+  }, [props.asin]);
 
-export default AddComment
+  return (
+    <Form onSubmit={sendReview}>
+      <Form.Group className="mb-3">
+        <Form.Label>Testo</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Bello sto libro!"
+          value={review.comment}
+          required
+          onChange={(e) => {
+            setReview({
+              ...review,
+              comment: e.target.value,
+            });
+          }}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Voto</Form.Label>
+        <Form.Select
+          value={review.rate}
+          onChange={(e) => {
+            setReview({
+              ...review,
+              rate: e.target.value,
+            });
+          }}
+        >
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </Form.Select>
+      </Form.Group>
+      <Button variant="success" type="submit">
+        INVIA
+      </Button>
+    </Form>
+  );
+};
+
+export default AddComment;
