@@ -8,7 +8,7 @@ const AllTheBooks = function () {
         {scifi.map((scifiBook) => {
           return (
             <Col xs={12} md={4} lg={3} key={scifiBook.asin}>
-              <Card>
+              <Card data-testid="book-card">
                 <Card.Img variant="top" src={scifiBook.img} />
                 <Card.Body>
                   <Card.Title>{scifiBook.title}</Card.Title>

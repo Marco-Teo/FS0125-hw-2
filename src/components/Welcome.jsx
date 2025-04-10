@@ -1,4 +1,4 @@
-import Alert from 'react-bootstrap/Alert'
+import Alert from "react-bootstrap/Alert";
 
 function Welcome() {
   return (
@@ -15,7 +15,7 @@ function Welcome() {
         nice and tidy.
       </p>
     </Alert>
-  )
+  );
 }
 
-export default Welcome
+export default Welcome;
